@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscrição de Curso - PCS ponto com</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
+body{background:#f0f2f5;color:#2d3748;padding:25px 15px}
+.container{background:#fff;max-width:800px;margin:0 auto;padding:30px 35px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+.cabecalho{text-align:center;border-bottom:2px solid #3182ce;padding-bottom:15px;margin-bottom:20px}
+.cabecalho h1{color:#1a365d;font-size:26px;margin-bottom:4px}
+.cabecalho .sub{color:#2b6cb0;font-weight:600;font-size:15px;margin-bottom:5px}
+.cabecalho .info{color:#4a5568;font-size:13px;line-height:1.4}
+h2.titulo{text-align:center;color:#1a202c;font-size:19px;margin-bottom:4px;text-transform:uppercase}
+p.subtitulo{text-align:center;color:#718096;font-size:13px;margin-bottom:20px}
+.secao{margin-bottom:25px;border-bottom:1px solid #e2e8f0;padding-bottom:15px}
+.secao:last-of-type{border-bottom:none}
+.secao h3{font-size:17px;color:#2b6cb0;margin-bottom:14px;border-left:4px solid #3182ce;padding-left:10px}
+.linha{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px}
+.campo{flex:1;min-width:190px}
+.campo-p{flex:.4;min-width:100px}
+.campo-g{flex:2;min-width:260px}
+label.lbl{display:block;font-weight:600;font-size:13px;margin-bottom:5px}
+input[type=text],input[type=email],input[type=tel],input[type=date],select{width:100%;padding:9px 11px;border:1px solid #cbd5e0;border-radius:6px;font-size:14px;background:#fff}
+input[readonly]{background:#edf2f7;font-weight:600}
+input:focus,select:focus{outline:none;border-color:#3182ce}
+.opcoes{display:flex;flex-wrap:wrap;gap:14px;padding-top:4px}
+.opcoes label{display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer}
+.caixa-pix{display:none;background:#ebf8ff;border:1px solid #90cdf4;border-left:5px solid #3182ce;padding:15px;border-radius:6px;margin-top:12px;font-size:13px;line-height:1.5}
+.pix-flex{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.pix-qr{text-align:center;background:#fff;padding:8px;border-radius:6px;border:1px solid #cbd5e0}
+.pix-qr img{width:140px;height:140px;object-fit:contain;display:block}
+.chave-box{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;padding:7px 10px;border:1px dashed #3182ce;border-radius:5px;margin:8px 0;flex-wrap:wrap}
+.btn-pix{background:#3182ce;color:#fff;border:none;padding:5px 10px;border-radius:4px;font-size:12px;font-weight:bold;cursor:pointer}
+.termo{background:#f7fafc;border:1px solid #e2e8f0;padding:12px;border-radius:6px;margin-bottom:14px;font-size:13px}
+.chk{display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:600;cursor:pointer}
+.botoes{display:flex;gap:12px;margin-top:15px}
+.botoes button{flex:1;padding:13px;border:none;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;color:#fff}
+.btn-ok{background:#3182ce}
+.btn-ok:disabled{background:#90cdf4}
+.btn-pdf{background:#4a5568}
+.btn-limpar{background:#e53e3e;flex:.5}
+.alerta{display:none;padding:12px;border-radius:6px;margin-bottom:15px;font-weight:600;text-align:center;font-size:14px}
+.sucesso{background:#c6f6d5;color:#22543d;border:1px solid #9ae6b4}
+.erro{background:#fed7d7;color:#742a2a;border:1px solid #feb2b2}
+.rodape{text-align:center;margin-top:20px;padding-top:12px;border-top:1px solid #e2e8f0;font-size:12px;color:#718096}
+@media print{.botoes,p.subtitulo,.alerta,.btn-pix{display:none!important}.container{box-shadow:none;padding:0}}
+@media(max-width:600px){.campo,.campo-p,.campo-g{flex:100%}.botoes{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="cabecalho">
+    <h1>PCS ponto com</h1>
+    <div class="sub">Cursos e Serviços</div>
+    <div class="info">Responsável Técnico: <strong>Silvano Rodrigues da Luz</strong> — Engenharia Elétrica<br>E-mail: pontoeletricoengenharia@gmail.com | WhatsApp: +55 62 9180-8098</div>
+  </div>
+
+  <h2 class="titulo">Ficha de Inscrição de Curso</h2>
+  <p class="subtitulo">Preencha todos os campos para efetivar sua matrícula.</p>
+  <div id="alerta" class="alerta"></div>
+
+  <form id="formInscricao" autocomplete="off">
+    <div class="secao">
+      <h3>1. Dados do Curso</h3>
+      <div class="linha">
+        <div class="campo-g">
+          <label class="lbl">Nome do Curso *</label>
+          <select id="curso" name="Nome_do_Curso" onchange="mudarValor()" required>
+            <option value="" data-v="">Selecione um curso...</option>
+            <option value="Eletricista Industrial (200h)" data-v="R$ 2.800,00">Eletricista Industrial — 200h</option>
+            <option value="Eletricista Predial (160h)" data-v="R$ 1.800,00">Eletricista Predial — 160h</option>
+            <option value="Eletricista Básico (80h)" data-v="R$ 1.200,00">Eletricista Básico — 80h</option>
+            <option value="Eletricista Redes Aéreas até 36,2kV (320h)" data-v="R$ 3.200,00">Eletricista Redes Aéreas Convencionais até 36,2kV — 320h</option>
+            <option value="NR10 (40h)" data-v="R$ 480,00">NR10 — 40h</option>
+            <option value="NR35 (40h)" data-v="R$ 480,00">NR35 — 40h</option>
+            <option value="Montagem e Manutenção de Energia Solar (40h)" data-v="R$ 850,00">Montagem e Manutenção de Energia Solar — 40h</option>
+            <option value="Projetista de Energia Solar (40h)" data-v="R$ 850,00">Projetista de Energia Solar — 40h</option>
+          </select>
+        </div>
+        <div class="campo"><label class="lbl">Data de Início *</label><input type="date" name="Data_de_Inicio" required></div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label class="lbl">Turma / Horário *</label>
+          <div class="opcoes">
+            <label><input type="radio" name="Turma_Horario" value="Manhã" required> Manhã</label>
+            <label><input type="radio" name="Turma_Horario" value="Tarde"> Tarde</label>
+            <label><input type="radio" name="Turma_Horario" value="Noite"> Noite</label>
+            <label><input type="radio" name="Turma_Horario" value="Sábado"> Sábado</label>
+            <label><input type="radio" name="Turma_Horario" value="EAD"> EAD</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo"><label class="lbl">Valor do Curso (R$) *</label><input type="text" id="valor" name="Valor_do_Curso" placeholder="Selecione o curso" readonly required></div>
+        <div class="campo-g">
+          <label class="lbl">Forma de Pagamento *</label>
+          <div class="opcoes">
+            <label><input type="radio" name="Forma_Pagamento" value="À vista" onchange="verPix()" required> À vista</label>
+            <label><input type="radio" name="Forma_Pagamento" value="Cartão" onchange="verPix()"> Cartão</label>
+            <label><input type="radio" name="Forma_Pagamento" value="Boleto" onchange="verPix()"> Boleto</label>
+            <label><input type="radio" name="Forma_Pagamento" value="Pix" onchange="verPix()"> Pix</label>
+          </div>
+        </div>
+      </div>
+
+      <div id="caixaPix" class="caixa-pix">
+        <strong>Instruções para Pagamento via Pix:</strong>
+        <div class="pix-flex" style="margin-top:8px">
+          <div class="pix-qr"><img src="qrcode-pix.png" alt="QR Code Pix"><small>Ler QR Code</small></div>
+          <div style="flex:1;min-width:220px">
+            <p>Escaneie o QR Code ou copie a chave Pix:</p>
+            <div class="chave-box">
+              <strong>pontoeletricoengenharia@gmail.com</strong>
+              <button type="button" class="btn-pix" onclick="copiarPix(this)">Copiar Chave</button>
+            </div>
+            <p><strong>Favorecido:</strong> Silvano Rodrigues da Luz<br>Envie o comprovante para o WhatsApp <strong>+55 62 9180-8098</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="secao">
+      <h3>2. Dados Pessoais do Aluno</h3>
+      <div class="linha"><div class="campo-g"><label class="lbl">Nome Completo *</label><input type="text" name="Nome_Completo" required></div></div>
+      <div class="linha">
+        <div class="campo"><label class="lbl">Data de Nascimento *</label><input type="date" name="Data_Nascimento" required></div>
+        <div class="campo"><label class="lbl">Sexo / Gênero *</label><select name="Sexo_Genero" required><option value="">Selecione...</option><option value="Feminino">Feminino</option><option value="Masculino">Masculino</option><option value="Outro">Outro</option></select></div>
+      </div>
+      <div class="linha">
+        <div class="campo"><label class="lbl">Nacionalidade *</label><input type="text" name="Nacionalidade" value="Brasileira" required></div>
+        <div class="campo"><label class="lbl">Naturalidade / UF *</label><input type="text" name="Naturalidade_UF" placeholder="Ex: Jaraguá/GO" required></div>
+      </div>
+      <div class="linha">
+        <div class="campo"><label class="lbl">CPF *</label><input type="text" name="CPF" placeholder="000.000.000-00" maxlength="14" oninput="mCPF(this)" required></div>
+        <div class="campo"><label class="lbl">RG / Órgão Expedidor *</label><input type="text" name="RG_Orgao" required></div>
+      </div>
+      <div class="linha">
+        <div class="campo-g"><label class="lbl">E-mail *</label><input type="email" name="Email" required></div>
+        <div class="campo"><label class="lbl">Telefone / WhatsApp *</label><input type="tel" name="WhatsApp" placeholder="(00) 00000-0000" maxlength="15" oninput="mTel(this)" required></div>
+      </div>
+    </div>
+
+    <div class="secao">
+      <h3>3. Endereço Residencial</h3>
+      <div class="linha">
+        <div class="campo"><label class="lbl">CEP *</label><input type="text" name="CEP" placeholder="00000-000" maxlength="9" oninput="mCEP(this)" onblur="buscaCEP(this.value)" required></div>
